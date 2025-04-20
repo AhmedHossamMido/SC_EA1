@@ -2,3 +2,4 @@ numpy
 scipy
 memray
 matplotlib
+timeit
