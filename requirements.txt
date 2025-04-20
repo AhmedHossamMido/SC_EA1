@@ -4,3 +4,4 @@ memray
 matplotlib
 timeit
 holoviews
+bokeh
