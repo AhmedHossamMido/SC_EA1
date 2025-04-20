@@ -3,3 +3,4 @@ scipy
 memray
 matplotlib
 timeit
+holoviews
