@@ -1,8 +1,7 @@
 
-import numpy as np
 import numba
+import numpy as np
 
-# Importierte Funktionen beibehalten
 def escape_time(p, maxiter):
     z = 0j
     for i in range(maxiter):
@@ -46,7 +45,7 @@ XX, YY = np.meshgrid(np.linspace(*real_param), np.linspace(*imag_param))
 P = XX + YY
 maxiter = 200
 
-# Nur die drei Varianten EINMAL aufrufen (keine Ausgabe)
+# alle drei Varianten EINMAL aufrufen
 mandelbrot_set_np_vectorized(P, maxiter)
 mandelbrot_set_numba_vectorized(P, maxiter)
 mandelbrot_set_numba_vectorized_par(P, maxiter)
