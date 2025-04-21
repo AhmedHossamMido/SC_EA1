@@ -8,3 +8,4 @@ bokeh
 imageio
 hvplot
 ipython
+scalene
