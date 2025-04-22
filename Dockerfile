@@ -29,6 +29,9 @@ SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 # uv installieren (schneller als pip)
 RUN pip install uv==0.6.6
 
+# Jupyter-Plugin für Scalene installieren
+RUN pip install jupyter-scalene
+
 # Cache-Ordner für Python-Pakete erstellen
 RUN mkdir -p $HOME/.cache
 
@@ -53,6 +56,9 @@ RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
     scipy==1.15.2 \
     viztracer==1.0.3 && \
   py pyflyby.install_in_ipython_config_file
+
+# Scalene-Erweiterung in Jupyter aktivieren
+RUN jupyter server extension enable scalene --sys-prefix
 
 # JupyterLab benötigt diese Variable für Marimo
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
