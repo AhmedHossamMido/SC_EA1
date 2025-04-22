@@ -9,9 +9,17 @@
     "ms-python.python",
     "ms-toolsai.jupyter",
     "ms-vscode.cpptools",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "mhutchie.git-graph",
+    "github.codespaces"
   ],
   "mounts": [
-    "source=${localWorkspaceFolder}/data,target=/workspace/data,type=bind"
-  ]
+    "source=${localWorkspaceFolder}/data,target=/workspace/data,type=bind",
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=host"  // Docker-Socket für Codespaces
+  ],
+  "remoteUser": "vscode",  // Setze den richtigen Benutzer, um zu gewährleisten, dass VSCode korrekt funktioniert
+  "postAttachCommand": "docker --version",  // Überprüfe, ob Docker nach dem Start des Containers verfügbar ist
+  "build": {
+    "dockerfile": "./Dockerfile"
+  }
 }
