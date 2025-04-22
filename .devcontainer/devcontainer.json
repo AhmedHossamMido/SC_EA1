@@ -16,5 +16,5 @@
     "source=${localWorkspaceFolder},target=/home/jovyan/materials,type=bind"
   ],
   "remoteUser": "jovyan",
-  "postCreateCommand": "cd /home/jovyan/materials && ls"
+  "postCreateCommand": "cd /home/jovyan/materials && git init && git status"
 }
