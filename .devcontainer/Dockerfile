@@ -13,7 +13,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
   --mount=type=cache,target=/var/lib/apt,sharing=locked \
   apt-get update && apt-get install -yq --no-install-recommends \
     debuginfod \
-    build-essential && \
+    build-essential \
+    git \
+    docker.io && \
   rm -rf /var/lib/apt/lists/*
 
 # Setze Umgebungsvariablen für den debuginfod-Server
@@ -28,7 +30,7 @@ SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 # Erstelle das Cache-Verzeichnis für die pip-Cache-Dateien
 RUN mkdir -p $HOME/.cache
 
-# Installiere Python-Pakete mit pip (entspricht dem Kurstext-Dockerfile)
+# Installiere Python-Pakete mit pip
 RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
   uv pip install \
     marimo==0.11.20 \
@@ -56,6 +58,9 @@ ENV JUPYTERHUB_SERVICE_PREFIX="/"
 # Exponiere den Port für JupyterLab (8888) und optional den für Viztracer (9001)
 EXPOSE 8888
 EXPOSE 9001
+
+# Docker-Socket mounten, um mit Docker innerhalb des Containers zu arbeiten
+VOLUME /var/run/docker.sock:/var/run/docker.sock
 
 # Stelle sicher, dass beim Start des Containers JupyterLab ausgeführt wird
 CMD ["start-notebook.sh"]
