@@ -1,13 +1,22 @@
 {
-  "name": "My Development Container",
+  "name": "SC-EA-Container",
   "build": {
-    "dockerfile": "./Dockerfile"
+    "dockerfile": "../Dockerfile",  // da Dockerfile im Wurzelverzeichnis ist
+    "context": ".."
   },
-  "settings": {},
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/home/jovyan/materials,type=bind"
+  ],
+  "forwardPorts": [8888],
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter",
     "ms-vscode.cpptools",
     "ms-python.vscode-pylance"
-  ]
+  ],
+  "postCreateCommand": "echo 'Container setup complete!'",
+  "remoteUser": "jovyan"
 }
