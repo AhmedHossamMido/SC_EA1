@@ -1,8 +1,8 @@
 {
   "name": "SCIPRO DevContainer",
   "build": {
-    "dockerfile": "./Dockerfile",
-    "context": "."
+    "dockerfile": "../Dockerfile",  // Pfad zum Dockerfile im Hauptverzeichnis
+    "context": ".."  // Setze den Kontext auf das Hauptverzeichnis
   },
   "customizations": {
     "vscode": {
