@@ -1,0 +1,13 @@
+{
+  "name": "My Development Container",
+  "build": {
+    "dockerfile": "./Dockerfile"
+  },
+  "settings": {},
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "ms-vscode.cpptools",
+    "ms-python.vscode-pylance"
+  ]
+}
