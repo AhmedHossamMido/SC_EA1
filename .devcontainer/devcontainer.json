@@ -1,20 +1,40 @@
 {
-  "name": "SC_EA1_bis_EA3 Container",
+  "name": "SCIPRO DevContainer",
   "build": {
-    "dockerfile": "../Dockerfile"
+    "dockerfile": "./Dockerfile",
+    "context": "."
   },
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.pythonPath": "/opt/conda/bin/python",
+        "python.autoComplete.extraPaths": [
+          "/opt/conda/lib/python3.9/site-packages"
+        ],
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.mypyEnabled": true,
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "jupyterlab.vscode-jupyter",
+        "ms-python.vscode-pylance",
+        "njpwerner.autodocstring",
+        "visualstudioexptteam.vscodeintellicode"
+      ]
+    }
   },
-  "extensions": [
-    "ms-python.python",
-    "ms-toolsai.jupyter",
-    "ms-vscode.cpptools",
-    "ms-python.vscode-pylance"
+  "postCreateCommand": "pip install -r /workspace/requirements.txt || true",
+  "runArgs": [
+    "--env", "DOCKER_ENV=dev"
   ],
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/home/jovyan/materials,type=bind"
-  ],
-  "remoteUser": "jovyan",
-  "postCreateCommand": "cd /home/jovyan/materials && git init && git status"
+  "forwardPorts": [8888],
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "docker-in-docker": "latest"
+  }
 }
