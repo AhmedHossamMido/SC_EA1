@@ -1,28 +1,17 @@
 {
-  "name": "SciPro Development Container",
-  "build": {
-    "dockerfile": "./Dockerfile"
+  "name": "Python Development Container",
+  "dockerFile": "./Dockerfile",  // Verwende das Dockerfile im gleichen Ordner
+  "postCreateCommand": "git config --global pull.rebase true",  // Setzt die Git-Konfiguration nach Container-Erstellung
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python3"
   },
-  "customizations": {
-    "vscode": {
-      "settings": {
-        "python.pythonPath": "/opt/conda/bin/python"
-      },
-      "extensions": [
-        "ms-python.python",
-        "ms-toolsai.jupyter",
-        "njpwerner.autodocstring",
-        "ms-azuretools.vscode-docker"
-      ]
-    }
-  },
-  "remoteUser": "jovyan",
-  "postCreateCommand": "pip install -r /workspace/requirements.txt || true",
-  "forwardPorts": [
-    8888,
-    9001
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "ms-vscode.cpptools",
+    "dbaeumer.vscode-eslint"
   ],
   "mounts": [
-    "source=/workspace,target=/home/jovyan/materials,type=bind"
+    "source=${localWorkspaceFolder}/data,target=/workspace/data,type=bind"
   ]
 }
