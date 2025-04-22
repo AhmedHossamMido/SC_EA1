@@ -1,0 +1,468 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Erste Schritte in Python\n",
+    "Die folgenden Aufgaben sollen zunächst ohne Hilfe von NumPy gelöst werden.  \n",
+    "## Aufgabe 1: Listen"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Gegeben ist eine Liste `numbers`, die mit Zahlen gefüllt ist.  \n",
+    "Iterieren Sie über die Elemente der Liste und füllen Sie die noch leeren Listen `positive` und `negative` jeweils mit den positiven und negativen Zahlen aus der Liste `numbers` (Null ist positiv).  \n",
+    "Geben Sie auch die Anzahl der Zahlen in jeder Liste an."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-a3a8afd642cdef47",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "numbers = [16,20,-6,98,83,0,-66,59,23,95,-48,-83,-39,-27,40,90,51,7,49,-9,-65,30,-49,-31,-51,-23,-55,64,85,-43,-40,-18,-92,85,77,40,83,59,-4,-21,7,-33,28,45,72,-20,-58,-51,-17,-11,72,-82,-29,70,19,-47,-35,-12,-6,-61,-71,-58,-39,-9,57,-80,71,-12,-52,-98,-46,-4,-73,-100,-89,54,41,-5,45,78,75,-16,24,-1,51,-50,-92,-38,94,53,31,93,-96,-81,-62,-74,-2,60]  # fmt:skip\n",
+    "positive = []\n",
+    "negative = []\n",
+    "\n",
+    "...\n",
+    "\n",
+    "count_positive = ...\n",
+    "count_negative = ...\n",
+    "\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Aufgabe 2: Formatierte Zeichenketten"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Es sind drei Listen definiert: `name`, `guthaben` und `wunsch`.  \n",
+    "Schreiben Sie eine Schleife, die diesen Satz in der folgenden Form für alle Listen-Tupel in der Liste `ausgaben` speichert:\n",
+    "\n",
+    "> \"Katrin besitzt 2.50€ und ihr Wunsch ist eine Tasse Kaffee.\"\n",
+    "\n",
+    "Hinweis:\n",
+    "- Das Guthaben (in €) muss immer 2 Nachkommastellen besitzen.\n",
+    "- Verwenden Sie [f-Strings](https://docs.python.org/3/tutorial/inputoutput.html), um diese Aufgabe zu lösen.\n",
+    "- Eine der [Python built-in functions](https://docs.python.org/3/library/functions.html) ist praktisch, um Tupel aus mehreren Listen zu bilden.\n",
+    "- Satzzeichen nicht vergessen."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "name = [\"Kathrin\", \"Nora\", \"Frieda\", \"Marieluise\"]\n",
+    "guthaben = [2.14, 32.1, 42.12, 12.4]\n",
+    "wunsch = [\"eine Tasse Kaffee\", \"eine heiße Schokolade\", \"ein Stück Kuchen\", \"nichts\"]\n",
+    "ausgaben = []\n",
+    "...\n",
+    "print(ausgaben)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Aufgabe 3: String-Manipulation und Listen"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Übersetzen Sie den Satz `sentence`in *Piratisch*, indem Sie jedem Wort die Nachsilbe `aarrr` hinzufügen, z.B. \"Ich\" wird zu \"Ichaarrr\". Geben Sie den neuen Satz aus.\n",
+    "\n",
+    "Hinweis: \n",
+    "- Die Funktion `split()` teilt eine Zeichenkette nach einem bestimmten Zeichen und gibt eine Liste zurück. Die Funktion wird direkt auf einer Zeichenkette aufgerufen `str.split()`\n",
+    "- Nutzen Sie Jupyters Hilfe (\"Help\", \"Show Contextual Help\") oder Pythons `help(str.split)`.\n",
+    "- Am Ende des Satzes soll kein Punkt stehen"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "sentence = \"Ich mag Python sehr gerne\"\n",
+    "translation = \"\"\n",
+    "\n",
+    "...\n",
+    "print(translation)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Aufgabe 4: Funktionen und Dictionaries"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Schreiben Sie eine Python-Funktion `modify_dictionary`, die vier Parameter übergeben bekommt:\n",
+    "- ein Dictionary `dictionary`\n",
+    "- einen Schlüssel `key`\n",
+    "- einen Wert `value`\n",
+    "- einen Parameter `replace` mit Standardwert `False`\n",
+    "\n",
+    "Die Funktion dient dazu, einen neuen Wert in das Dictionary einzutragen.\n",
+    "Wenn replace `True` ist, ersetzt die Funktion den Eintrag im Dictionary, wenn der Schlüssel bereits vorhanden ist. \n",
+    "Ist replace `False`, prüft die Funktion zuerst, ob der Eintrag bereits im Dictionary vorhanden ist. Ist dies der Fall, wird das Dictionary nicht geändert. \n",
+    "\n",
+    "Die Funktion arbeitet direkt auf dem übergebenen Dictionary und braucht daher nicht zwingend einen Rückgabewert. Das ist immer dann der Fall, wenn ein Parametertyp veränderbar ist (engl. mutable). Geben Sie aufgrund der besseren Lesbarkeit trotzdem das Dictionary zurück."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "outputs": [],
+   "source": [
+    "original_dictionary = {\n",
+    "    \"Tobias\": \"September\",\n",
+    "    \"Lena\": \"January\",\n",
+    "    \"Moritz\": \"June\",\n",
+    "    \"Nora\": \"February\",\n",
+    "    \"Arne\": \"May\",\n",
+    "    \"Marieluise\": \"January\",\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "## Aufgabe 5: Berechnung von Wurzeln\n",
+    "Schreiben Sie eine Funktion `square_root`, die die Quadratwurzel einer Zahl `number` so lange approximiert, bis sich die Ergebnisse zweier aufeinanderfolgender Iterationen $x_{i-1}$ und $x_{i}$ um weniger als $10^{-8}$ unterscheiden. \n",
+    "\n",
+    "Die Funktion `square_root` soll 2 Werte zurückgeben:\n",
+    "- die berechnete Quadratwurzel\n",
+    "- die Anzahl der benötigten Iterationen\n",
+    "\n",
+    "Hinweis: \n",
+    "- Die Quadratwurzel einer Zahl $a$ kann mit der folgenden Funktion iterativ approximiert werden:\n",
+    "$x_{i+1}=\\frac{1}{2}\\cdot(x_i+\\frac{a}{x_i})$\n",
+    "- Als Startwert können Sie $x_0=1$ verwenden."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-9cde6cde9203ee63",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Wie viele Iterationen sind für die Eingabewerte 3, 5.5 und 434 erforderlich? Speichern Sie die Quadratwurzeln in `roots` und die benötigten Iterationen in `iterations`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-17c97eb442159414",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "numbers = [3, 5.5, 434]\n",
+    "roots = []\n",
+    "iterations = []\n",
+    "\n",
+    "...\n",
+    "print(numbers, roots, iterations)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Schreiben Sie eine Funktion `n_root` mit folgenden Parametern:\n",
+    "- Zahl `number`\n",
+    "- n (für die n-te Wurzel) (default: 2)\n",
+    "- Anzahl der Iterationen (default: 10)\n",
+    "\n",
+    "Hinweis: \n",
+    "- Die n-te Wurzel einer Funktion kann iterativ mit der Funktion \n",
+    "$x_{i+1}=\\frac{1}{n}\\cdot((n-1)x_i+\\frac{a}{x^{n-1}_i})$\n",
+    "berechnet werden.\n",
+    "- Testen Sie die Funktion `n_root` mit verschiedenen Parametern."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-85e2a0e808f7d6d0",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Vergleichen Sie die Zeit Ihrer Funktion `square_root()` mit der Zeit von `math.sqrt()` und der Zeit von `np.sqrt()`\n",
+    "\n",
+    "Hinweis: \n",
+    "- Verwenden Sie für die Zeitmessung das Jupyter-Magic `%timeit`. Die Hilfe dazu können Sie mit `%timeit?` anzeigen. Verwenden Sie die Option `%timeit -o`, um die Ergebnisse in den vorgegebenen Variablen zu speichern. Sollten Sie eine manuelle Zeitmessung mit `time.perf_counter()` bevorzugen, müssen Sie die Messung auf jeden Fall mehrmals durchführen."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-57de9cb5a6af825c",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "import math\n",
+    "import numpy as np\n",
+    "\n",
+    "custom_time = ...\n",
+    "math_time = ...\n",
+    "numpy_time = ..."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.0"
+  },
+  "otter": {
+   "OK_FORMAT": true,
+   "assignment_name": "Python",
+   "tests": {
+    "birthdays": {
+     "name": "birthdays",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "f_strings": {
+     "name": "f_strings",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "lists": {
+     "name": "lists",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "n_root": {
+     "name": "n_root",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "piratisch": {
+     "name": "piratisch",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "square_root": {
+     "name": "square_root",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "square_root_comparison": {
+     "name": "square_root_comparison",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "square_root_iterations": {
+     "name": "square_root_iterations",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

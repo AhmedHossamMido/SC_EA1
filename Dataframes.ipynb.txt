@@ -1,0 +1,534 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Hinweis: Für diese Aufgabe können Sie sowohl Pandas als auch Polars verwenden."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "source": [
+    "# AirBnB Daten\n",
+    "\n",
+    "Als Übung wollen wir die AirBNB Daten vom November 2018 aus Berlin auswerten. \n",
+    "Lesen Sie dazu die Datei `listings.csv` in einen DataFrame ein, bestimmen Sie die Länge des DataFrames und geben Sie die ersten 5 Zeilen aus."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "source": [
+    "Es gibt einige Fehler in den Daten. \n",
+    "- Ersetzen Sie fehlende Werte (`fillna()` für Pandas, `fill_null()` für Polars)\n",
+    "    - für die Spalte `reviews_per_month` durch 0\n",
+    "    - für die Spalte `last_review` durch \"2000-01-01-01\".\n",
+    "- Sortieren Sie alle Datensätze (Zeilen) aus, die noch NaN-Werte bzw. null-Werte haben. \n",
+    "- Sortieren Sie alle Datensätze (Zeilen) aus, bei denen der Preis <=1 oder >=2000 ist."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-41fab498fc92d06d",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# import polars as pl\n",
+    "# oder\n",
+    "# import pandas as pd\n",
+    "df = ...\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-1834806a6da9e231",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Ändern Sie den Datentyp der Spalte `last_review` von String zu Datetime.\n",
+    "\n",
+    "- Hinweis für Polars: Nutzen Sie den Namespace `str` und die Funktion `.str.to_datetime()` im Kontext `with_columns()`\n",
+    "- Hinweis für Pandas: Nutzen Sie `pd.to_datetime()` und verwenden Sie die Funktion `apply()` "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-c63ca2760849c7bd",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "df = ...\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "- Finden Sie die fünf Nutzer mit den meisten Listings "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-e3533775617a0f6b",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "scrolled": true,
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "top_five = ...\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "Betrachten Sie die Daten des Benutzers mit den meisten Einträgen und finden sie heraus, was das teuerste und billigste Apartment ist, dass er anbietet und wie hoch der Durchschnittspreis seiner Angebote ist. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-49c89ff86abf3f33",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "...\n",
+    "\n",
+    "top_host = ...\n",
+    "\n",
+    "...\n",
+    "top_host_stats = ...\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "<!-- BEGIN QUESTION -->\n",
+    "\n",
+    "Nun wollen wir uns wieder den gesamten Datensatz ansehen. Erstellen Sie ein Boxplot Diagramm mit den Preisen für jede Zimmer-Kategorie (`room_type`). \n",
+    "Sie können die Ausreißer vorher filtern, oder mit `df.plot()` die Option `showfliers=False` verwenden.  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-488ef8979412444f",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "<!-- END QUESTION -->\n",
+    "\n",
+    "Erstellen Sie einen neuen DataFrame mit allen Datensätzen, die zuletzt 2018 ein Review erhalten haben (data_2018). Ermitteln Sie, für welche Monate wie viele Einträge im Jahr 2018 ihr letztes Review haben."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-0f7c0cb102558ec2",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "months = ...\n",
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false,
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "source": [
+    "<!-- BEGIN QUESTION -->\n",
+    "\n",
+    "Stellen Sie in einem Histogramm die *availability_365* dar. Dabei sollen Werte für `availability_365==0` nicht mit einbezogen werden. Verwenden Sie 30 bins. (z.B. `pd.Series.hist()`) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-dc4c1ee8e70867f7",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "<!-- END QUESTION -->\n",
+    "\n",
+    "<!-- BEGIN QUESTION -->\n",
+    "\n",
+    "Ermitteln Sie die Gesamtzahl der Reviews für jeden Host.\n",
+    "\n",
+    "Danach fügen Sie dem DataFrame eine Spalte hinzu, welche die durchschnittliche Anzahl Reviews pro Host enthält.\n",
+    "\n",
+    "Schließlich erstellen Sie ein Diagramm (z.B. vom Typ `bar`), das die Gesamtzahl und den Durchschnitt der Reviews darstellt.\n",
+    "Beachten Sie dabei nur die 10 Hosts mit den meisten Reviews."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-545dec9fef30e1a8",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "<!-- END QUESTION -->\n",
+    "\n",
+    "<!-- BEGIN QUESTION -->\n",
+    "\n",
+    "Erstellen Sie ein Diagramm (mit Längen- und Breitengrad), welches die Verteilung der Wohnungen über Berlin für die einzelnen Stadtteile (\"neighbourhood_group\") darstellt, wie im folgenden Beispiel gezeigt. \n",
+    "\n",
+    "**Tipp**: Verwenden Sie die Funktion `pandas.DataFrame.plot.scatter`. Das Farbarray ist unten gegeben. \n",
+    "\n",
+    "Heben Sie alle Zimmer mit einem Stern hervor, die günstiger als 10 Euro die Nacht sind\n",
+    "![airbnb](airbnb.png \"Titeneighbourhood_groupl\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "colors = [\n",
+    "    \"lightcoral\",\n",
+    "    \"brown\",\n",
+    "    \"tomato\",\n",
+    "    \"peru\",\n",
+    "    \"darkorange\",\n",
+    "    \"gold\",\n",
+    "    \"lightgreen\",\n",
+    "    \"forestgreen\",\n",
+    "    \"teal\",\n",
+    "    \"aqua\",\n",
+    "    \"mediumblue\",\n",
+    "    \"purple\",\n",
+    "]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "editable": true,
+    "nbgrader": {
+     "grade": false,
+     "grade_id": "cell-284344800a245746",
+     "locked": false,
+     "schema_version": 3,
+     "solution": true,
+     "task": false
+    },
+    "slideshow": {
+     "slide_type": ""
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "..."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "deletable": false,
+    "editable": false
+   },
+   "source": [
+    "<!-- END QUESTION -->\n",
+    "\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.0"
+  },
+  "otter": {
+   "OK_FORMAT": true,
+   "assignment_name": "NumPy",
+   "tests": {
+    "change_dtype": {
+     "name": "change_dtype",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "most_listings": {
+     "name": "most_listings",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "read_csv": {
+     "name": "read_csv",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "reviews_2018": {
+     "name": "reviews_2018",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    },
+    "top_host": {
+     "name": "top_host",
+     "points": null,
+     "suites": [
+      {
+       "cases": [],
+       "scored": true,
+       "setup": "",
+       "teardown": "",
+       "type": "doctest"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
