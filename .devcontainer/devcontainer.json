@@ -1,22 +1,20 @@
 {
-  "name": "SC-EA-Container",
+  "name": "SC_EA1_bis_EA3 Container",
   "build": {
-    "dockerfile": "../Dockerfile",  // da Dockerfile im Wurzelverzeichnis ist
-    "context": ".."
+    "dockerfile": "../Dockerfile"
   },
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/home/jovyan/materials,type=bind"
-  ],
-  "forwardPorts": [8888],
   "extensions": [
     "ms-python.python",
     "ms-toolsai.jupyter",
     "ms-vscode.cpptools",
     "ms-python.vscode-pylance"
   ],
-  "postCreateCommand": "echo 'Container setup complete!'",
-  "remoteUser": "jovyan"
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/home/jovyan/materials,type=bind"
+  ],
+  "remoteUser": "jovyan",
+  "postCreateCommand": "cd /home/jovyan/materials && ls"
 }
