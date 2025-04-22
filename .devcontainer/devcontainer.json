@@ -1,40 +1,28 @@
 {
-  "name": "SCIPRO DevContainer",
+  "name": "SciPro Development Container",
   "build": {
-    "dockerfile": "../Dockerfile",  // Pfad zum Dockerfile im Hauptverzeichnis
-    "context": ".."  // Setze den Kontext auf das Hauptverzeichnis
+    "dockerfile": "./Dockerfile"
   },
   "customizations": {
     "vscode": {
       "settings": {
-        "python.pythonPath": "/opt/conda/bin/python",
-        "python.autoComplete.extraPaths": [
-          "/opt/conda/lib/python3.9/site-packages"
-        ],
-        "python.linting.enabled": true,
-        "python.linting.pylintEnabled": true,
-        "python.linting.flake8Enabled": true,
-        "python.linting.mypyEnabled": true,
-        "editor.formatOnSave": true
+        "python.pythonPath": "/opt/conda/bin/python"
       },
       "extensions": [
         "ms-python.python",
         "ms-toolsai.jupyter",
-        "jupyterlab.vscode-jupyter",
-        "ms-python.vscode-pylance",
         "njpwerner.autodocstring",
-        "visualstudioexptteam.vscodeintellicode"
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
+  "remoteUser": "jovyan",
   "postCreateCommand": "pip install -r /workspace/requirements.txt || true",
-  "runArgs": [
-    "--env", "DOCKER_ENV=dev"
+  "forwardPorts": [
+    8888,
+    9001
   ],
-  "forwardPorts": [8888],
-  "remoteUser": "vscode",
-  "workspaceFolder": "/workspace",
-  "features": {
-    "docker-in-docker": "latest"
-  }
+  "mounts": [
+    "source=/workspace,target=/home/jovyan/materials,type=bind"
+  ]
 }
