@@ -24,13 +24,10 @@ USER $NB_USER
 # Aktiviere conda als die Shell-Umgebung
 SHELL ["conda", "run", "--no-capture-output", "-n", "python38", "/bin/bash", "-c"]
 
-# Installiere uv als schnelle Alternative zu pip
-RUN pip install uv==0.6.6
-
-# Kopiere die requirements.txt und installiere alle Abhängigkeiten
+# Installiere pip und pyflyby (sowie alle Abhängigkeiten aus requirements.txt)
+RUN pip install --upgrade pip
 COPY requirements.txt /tmp/requirements.txt
-RUN mkdir -p $HOME/.cache && \
-    uv pip install -r /tmp/requirements.txt && \
+RUN pip install -r /tmp/requirements.txt && \
     pip install pyflyby && \
     python -m pyflyby.install_in_ipython_config_file
 
