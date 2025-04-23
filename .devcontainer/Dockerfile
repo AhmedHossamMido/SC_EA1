@@ -20,8 +20,9 @@ USER $NB_USER
 # Setze Conda als Standard-Shell
 SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 
-# Stelle sicher, dass Python 3.8 verwendet wird
-RUN conda install python=3.8
+# Erstelle eine neue Conda-Umgebung mit Python 3.8
+RUN conda create --name scipro python=3.8 && \
+    conda clean --all -y
 
 # Installiere uv als fast alternative für pip
 RUN pip install uv==0.6.6
@@ -34,10 +35,10 @@ RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
     py pyflyby.install_in_ipython_config_file
 
 # Installiere ipykernel (damit Jupyter es erkennt)
-RUN conda install -c conda-forge ipykernel
+RUN conda run -n scipro pip install ipykernel
 
 # Erstelle einen neuen Jupyter-Kernel namens 'scipro'
-RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+RUN conda run -n scipro python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
 
 # Setze JupyterHub Service Prefix
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
@@ -46,8 +47,7 @@ ENV JUPYTERHUB_SERVICE_PREFIX="/"
 WORKDIR /workspaces/SC_EA1_bis_EA3
 
 # Installiere zusätzliche Python-Pakete
-RUN pip install \
-    # Profiling- und wissenschaftliche Berechnungen
+RUN conda run -n scipro pip install \
     scalene==1.5.51 \
     memray==1.16.0 \
     numba==0.61.0 \
@@ -56,15 +56,12 @@ RUN pip install \
     matplotlib==3.10.1 \
     plotly==6.0.0 \
     scipy==1.15.2 \
-    # Visualisierung
     altair==5.5.0 \
     hvplot==0.11.2 \
     jupyter-marimo-proxy==0.0.4 \
     marimo==0.11.20 \
-    # Auto-Import von fehlenden Modulen
     pyflyby==1.9.11 \
     jupyterlab-pyflyby==5.1.2
 
 # Setze den JupyterHub Prefix
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
-
