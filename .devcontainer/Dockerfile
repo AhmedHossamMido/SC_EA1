@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1
-# Verwende das jupyter base-notebook-Image
 FROM quay.io/jupyter/base-notebook:lab-4.3.6 AS base_image
 
+# Installiere benötigte Pakete
 USER root
-
-# Installiere debuginfod und git
 RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
     apt-get update && \
@@ -12,56 +10,35 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
     debuginfod git build-essential && \
     apt-get clean
 
+# Setze Umgebungsvariablen
 ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
 
-# Wechsle zurück zu $NB_USER (standardmäßiger Benutzer)
+# Wechsel zu Nutzer jovyan
 USER $NB_USER
 
-# Setze Conda als Standard-Shell
+# Aktiviere conda als die Shell-Umgebung
 SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 
-# Erstelle eine neue Conda-Umgebung mit Python 3.8
-RUN conda create --name scipro python=3.8 && \
-    conda clean --all -y
+# Installiere Python 3.8 explizit
+RUN conda install python=3.8
 
-# Installiere uv als fast alternative für pip
+# Installiere uv als schnelle Alternative zu pip
 RUN pip install uv==0.6.6
 
-# Kopiere die requirements.txt und installiere die Pakete
+# Kopiere die requirements.txt und installiere alle Abhängigkeiten
 COPY requirements.txt /tmp/requirements.txt
-RUN mkdir -p $HOME/.cache
-RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
+RUN mkdir -p $HOME/.cache && \
     uv pip install -r /tmp/requirements.txt && \
     py pyflyby.install_in_ipython_config_file
 
-# Installiere ipykernel (damit Jupyter es erkennt)
-RUN conda run -n scipro pip install ipykernel
+# Installiere ipykernel für die Jupyter-Integration
+RUN conda install -c conda-forge ipykernel
 
-# Erstelle einen neuen Jupyter-Kernel namens 'scipro'
-RUN conda run -n scipro python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+# Installiere den 'scipro' Kernel in Jupyter
+RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
 
-# Setze JupyterHub Service Prefix
-ENV JUPYTERHUB_SERVICE_PREFIX="/"
-
-# Definiere das Arbeitsverzeichnis in GitHub Codespace und Jupyter
+# Setze den Arbeitsordner
 WORKDIR /workspaces/SC_EA1_bis_EA3
 
-# Installiere zusätzliche Python-Pakete
-RUN conda run -n scipro pip install \
-    scalene==1.5.51 \
-    memray==1.16.0 \
-    numba==0.61.0 \
-    numpy \
-    pandas==2.2.3 \
-    matplotlib==3.10.1 \
-    plotly==6.0.0 \
-    scipy==1.15.2 \
-    altair==5.5.0 \
-    hvplot==0.11.2 \
-    jupyter-marimo-proxy==0.0.4 \
-    marimo==0.11.20 \
-    pyflyby==1.9.11 \
-    jupyterlab-pyflyby==5.1.2
-
-# Setze den JupyterHub Prefix
+# Setze JupyterHub Dienstpräfix
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
