@@ -24,10 +24,17 @@ WORKDIR /workspaces/SC_EA1_bis_EA3
 # Installiere pip und pyflyby (sowie alle Abhängigkeiten aus requirements.txt)
 # Wir stellen sicher, dass pip und pyflyby korrekt ohne Conda ausgeführt werden
 RUN pip install --upgrade pip
+
+# Kopiere die requirements.txt
 COPY requirements.txt /tmp/requirements.txt
+
+# Installiere alle Anforderungen und pyflyby
 RUN pip install -r /tmp/requirements.txt && \
-    pip install pyflyby && \
+    # Überprüfe die Installation von pyflyby
+    python -c "import pyflyby; print('pyflyby version:', pyflyby.__version__)" && \
+    # Installiere pyflyby in die IPython-Konfiguration
     python -m pyflyby.install_in_ipython_config_file
+
 
 # Installiere ipykernel für die Jupyter-Integration
 RUN conda install -c conda-forge ipykernel
