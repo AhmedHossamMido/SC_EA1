@@ -1,11 +1,10 @@
 {
   "name": "scipro-container",
-  "dockerFile": "Dockerfile",  // Verweis auf das Dockerfile
-  "context": ".",  // Verwendet das aktuelle Verzeichnis
+  "dockerFile": "Dockerfile",
+  "context": ".",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "postCreateCommand": "pip install --no-cache-dir -r /tmp/requirements.txt",  // Installiere Pakete nach der Containererstellung
   "extensions": [
     "ms-python.python",
     "jupyter.jupyter-notebooks"
