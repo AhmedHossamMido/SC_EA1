@@ -15,19 +15,14 @@ RUN curl -sSLo miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-lates
 # Setze Miniconda in PATH
 ENV PATH="/opt/conda/bin:$PATH"
 
-# Setze Umgebungsvariablen
-ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
-
 # Wechsel zu Nutzer jovyan
 USER $NB_USER
 
 # Setze den Arbeitsordner
 WORKDIR /workspaces/SC_EA1_bis_EA3
 
-# Aktiviere die Conda-Umgebung
-SHELL ["conda", "run", "--no-capture-output", "-n", "python38", "/bin/bash", "-c"]
-
 # Installiere pip und pyflyby (sowie alle Abhängigkeiten aus requirements.txt)
+# Wir stellen sicher, dass pip und pyflyby korrekt ohne Conda ausgeführt werden
 RUN pip install --upgrade pip
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt && \
