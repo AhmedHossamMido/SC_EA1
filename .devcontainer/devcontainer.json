@@ -1,11 +1,10 @@
 {
   "name": "SciPro JupyterLab",
   "build": {
-  "dockerfile": "Dockerfile"
-}
-,
+    "dockerfile": "Dockerfile"
+  },
   "forwardPorts": [8888],
-  "postCreateCommand": "echo 'Container fertig eingerichtet.'",
+  "postCreateCommand": "python -m ipykernel install --user --name scipro --display-name 'SciPro Jupyter (Docker)' && echo 'Container fertig eingerichtet.'",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -15,6 +14,5 @@
     }
   },
   "features": {},
-  "remoteUser": "jovyan",
-  "onCreateCommand": "echo 'Codespace ready. Öffne http://localhost:8888'"
+  "remoteUser": "jovyan"
 }
