@@ -1,8 +1,9 @@
-## 🚀 Quick Start with GitHub Codespaces
+## Devcontainer (GitHub Codespaces)
 
-Click the green **Code** button, then select **Open with Codespaces**.
+Dieses Projekt nutzt einen Devcontainer mit Python 3.8 und virtueller Umgebung (.venv).
 
-Everything is set up automatically:
-- 📦 All Python dependencies are installed
-- 🧠 A Jupyter kernel is pre-registered
-- ✅ No manual setup needed
+### Setup-Hinweis
+
+Nach dem Öffnen in Codespaces:
+- Die Umgebung `.venv` wird automatisch erstellt.
+- Der passende Jupyter-Kernel „Python (.venv)“ steht bereit (ggf. manuell im Notebook auswählen).
