@@ -31,13 +31,13 @@ RUN pip install uv==0.6.6
 COPY requirements.txt /tmp/requirements.txt
 RUN mkdir -p $HOME/.cache && \
     uv pip install -r /tmp/requirements.txt && \
-    py pyflyby.install_in_ipython_config_file
+    python -m pyflyby.install_in_ipython_config_file
 
 # Installiere ipykernel für die Jupyter-Integration
-RUN conda install -c conda-forge ipykernel
+RUN pip install ipykernel
 
 # Installiere den 'scipro' Kernel in Jupyter
-RUN conda run -n python38 python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+RUN python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
 
 # Setze den Arbeitsordner
 WORKDIR /workspaces/SC_EA1_bis_EA3
