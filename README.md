@@ -52,4 +52,4 @@ Das Repository enthält drei Hauptdateien, die für die Konfiguration des Devcon
 
 ---
 
-Viel Spaß beim Arbeiten mit GitHub Codespaces! Wenn du Fragen hast, kannst du dich gerne melden.
+Viel Spaß!
