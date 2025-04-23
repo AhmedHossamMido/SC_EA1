@@ -1,15 +1,15 @@
 {
-  "name": "Python (requirements)",
+  "name": "Python Jupyter Environment",
   "features": {
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.10"
     }
   },
-  "postCreateCommand": "pip install -r requirements.txt",
+  "postCreateCommand": "pip install -r requirements.txt && python -m ipykernel install --user --name=python3-codespace",
   "customizations": {
     "vscode": {
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
+        "python.defaultInterpreterPath": "/usr/bin/python3"
       },
       "extensions": [
         "ms-python.python",
