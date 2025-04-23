@@ -1,17 +1,10 @@
 {
-  "name": "SciPro JupyterLab",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "forwardPorts": [8888],
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-toolsai.jupyter",
-        "ms-python.python"
-      ]
-    }
-  },
-  "features": {},
-  "remoteUser": "jovyan"
+  "name": "SciPro Docker Container",
+  "dockerFile": "Dockerfile",
+  "workspaceFolder": "/workspaces/SC_EA1_bis_EA3",
+  "extensions": [
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ],
+  "postCreateCommand": "pip install --upgrade pip"
 }
