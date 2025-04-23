@@ -1,46 +1,31 @@
-# syntax=docker/dockerfile:1
-FROM quay.io/jupyter/base-notebook:lab-4.3.6 AS base_image
+# Basierend auf dem offiziellen Jupyter-Image
+FROM jupyter/base-notebook:lab-4.3.6
 
-# Installiere curl und andere benötigte Pakete
+# Setze den Benutzer auf jovyan (wird standardmäßig vom jupyter/base-notebook-Image verwendet)
 USER root
-RUN apt-get update && apt-get install -y curl git build-essential && apt-get clean
 
-# Installiere Miniconda und eine neue Umgebung mit Python 3.8
-RUN curl -sSLo miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash miniconda.sh -b -u -p /opt/conda && \
-    rm miniconda.sh && \
-    /opt/conda/bin/conda create -n python38 python=3.8 && \
-    /opt/conda/bin/conda clean -a -y
+# Installiere alle Systemabhängigkeiten, falls nötig
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    debuginfod build-essential
 
-# Setze Miniconda in PATH
-ENV PATH="/opt/conda/bin:$PATH"
-
-# Wechsel zu Nutzer jovyan
+# Wechsle zu jovyan-Benutzer
 USER $NB_USER
 
-# Setze den Arbeitsordner
-WORKDIR /workspaces/SC_EA1_bis_EA3
-
-# Installiere pip und pyflyby (sowie alle Abhängigkeiten aus requirements.txt)
-# Wir stellen sicher, dass pip und pyflyby korrekt ohne Conda ausgeführt werden
-RUN pip install --upgrade pip
-
-# Kopiere die requirements.txt
+# Installiere Python-Pakete aus requirements.txt
 COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Installiere alle Anforderungen und pyflyby
-RUN pip install -r /tmp/requirements.txt && \
-    # Überprüfe die Installation von pyflyby
-    python -c "import pyflyby; print('pyflyby version:', pyflyby.__version__)" && \
-    # Installiere pyflyby in die IPython-Konfiguration
-    python -m pyflyby.install_in_ipython_config_file
+# Teste die Installation von pyflyby
+RUN python -c "import pyflyby; print('pyflyby version:', pyflyby.__version__)"
 
+# Installiere pyflyby in der IPython-Konfiguration
+RUN python -m pyflyby.install_in_ipython_config_file
 
-# Installiere ipykernel für die Jupyter-Integration
-RUN conda install -c conda-forge ipykernel
+# Setze den Arbeitsordner (optional)
+WORKDIR /home/jovyan
 
-# Installiere den 'scipro' Kernel in Jupyter
-RUN conda run -n python38 python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+# Exponiere den Port für JupyterLab (normalerweise 8888)
+EXPOSE 8888
 
-# Setze JupyterHub Dienstpräfix
-ENV JUPYTERHUB_SERVICE_PREFIX="/"
+# Starte JupyterLab
+CMD ["start-notebook.sh"]
