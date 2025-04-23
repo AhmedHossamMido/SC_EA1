@@ -30,7 +30,7 @@ RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
 RUN conda install -c conda-forge ipykernel
 
 # Create a new kernel named 'scipro' based on the environment
-RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro (Python 3.10 - Conda)"
 
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
 
