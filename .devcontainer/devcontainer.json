@@ -4,7 +4,6 @@
     "dockerfile": "Dockerfile"
   },
   "forwardPorts": [8888],
-  "postCreateCommand": "python -m ipykernel install --user --name scipro --display-name 'SciPro Jupyter (Docker)' && echo 'Container fertig eingerichtet.'",
   "customizations": {
     "vscode": {
       "extensions": [
