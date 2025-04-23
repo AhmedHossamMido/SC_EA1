@@ -6,8 +6,9 @@ USER root
 RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
     apt-get update && apt-get install -yq --no-install-recommends \
-      debuginfod && \
-      apt-get clean
+      debuginfod \
+      git && \    # Git hinzufügen
+    apt-get clean
 
 ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
 
