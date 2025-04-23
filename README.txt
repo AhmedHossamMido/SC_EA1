@@ -1,17 +1,8 @@
-## 🧪 Arbeiten im Codespace
+## 🚀 Quick Start with GitHub Codespaces
 
-Dieses Projekt ist für GitHub Codespaces optimiert.  
-Beim Öffnen des Repos wird automatisch:
+Click the green **Code** button, then select **Open with Codespaces**.
 
-- Python 3.10 verwendet
-- Alle Abhängigkeiten aus `requirements.txt` installiert
-- Jupyter und relevante Erweiterungen aktiviert
-
-Du brauchst **nichts lokal zu installieren**.
-
-Wenn du jetzt dein Repository öffnest mit **„Code → Open in Codespaces“**, dann:
-
-✅ Richtet GitHub automatisch Python 3.10 ein  
-✅ Installiert alles aus `requirements.txt`  
-✅ Jupyter funktioniert direkt  
-✅ Du musst nichts manuell konfigurieren
+Everything is set up automatically:
+- 📦 All Python dependencies are installed
+- 🧠 A Jupyter kernel is pre-registered
+- ✅ No manual setup needed
