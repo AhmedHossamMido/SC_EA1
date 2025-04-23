@@ -1,41 +1,70 @@
 # syntax=docker/dockerfile:1
-
+# Verwende das jupyter base-notebook-Image
 FROM quay.io/jupyter/base-notebook:lab-4.3.6 AS base_image
 
 USER root
 
-# Install debuginfod and git
+# Installiere debuginfod und git
 RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
     apt-get update && \
     apt-get install -yq --no-install-recommends \
-    debuginfod git && \
+    debuginfod git build-essential && \
     apt-get clean
 
 ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
 
+# Wechsle zurück zu $NB_USER (standardmäßiger Benutzer)
 USER $NB_USER
 
-# We need to set conda as the environment shell
+# Setze Conda als Standard-Shell
 SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 
-# Install uv and packages
+# Stelle sicher, dass Python 3.8 verwendet wird
+RUN conda install python=3.8
+
+# Installiere uv als fast alternative für pip
 RUN pip install uv==0.6.6
 
-# Copy the requirements file and install the dependencies
+# Kopiere die requirements.txt und installiere die Pakete
 COPY requirements.txt /tmp/requirements.txt
 RUN mkdir -p $HOME/.cache
 RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
     uv pip install -r /tmp/requirements.txt && \
     py pyflyby.install_in_ipython_config_file
 
-# Install ipykernel (important to link with Jupyter)
+# Installiere ipykernel (damit Jupyter es erkennt)
 RUN conda install -c conda-forge ipykernel
 
-# Create a new kernel named 'scipro' based on the environment
+# Erstelle einen neuen Jupyter-Kernel namens 'scipro'
 RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
 
+# Setze JupyterHub Service Prefix
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
 
-# Default working directory in Codespace and Jupyter
+# Definiere das Arbeitsverzeichnis in GitHub Codespace und Jupyter
 WORKDIR /workspaces/SC_EA1_bis_EA3
+
+# Installiere zusätzliche Python-Pakete
+RUN pip install \
+    # Profiling- und wissenschaftliche Berechnungen
+    scalene==1.5.51 \
+    memray==1.16.0 \
+    numba==0.61.0 \
+    numpy \
+    pandas==2.2.3 \
+    matplotlib==3.10.1 \
+    plotly==6.0.0 \
+    scipy==1.15.2 \
+    # Visualisierung
+    altair==5.5.0 \
+    hvplot==0.11.2 \
+    jupyter-marimo-proxy==0.0.4 \
+    marimo==0.11.20 \
+    # Auto-Import von fehlenden Modulen
+    pyflyby==1.9.11 \
+    jupyterlab-pyflyby==5.1.2
+
+# Setze den JupyterHub Prefix
+ENV JUPYTERHUB_SERVICE_PREFIX="/"
+
