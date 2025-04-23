@@ -1,17 +1,18 @@
 {
-  "name": "Python Dev Environment",
+  "name": "SciPro JupyterLab",
   "build": {
-    "dockerfile": "../Dockerfile"
+    "dockerfile": "Dockerfile"
   },
-  "settings": {
-    "python.pythonPath": "/opt/conda/bin/python",
-    "python.defaultInterpreterPath": "/opt/conda/bin/python"
+  "forwardPorts": [8888],
+  "postCreateCommand": "echo 'Container fertig eingerichtet.'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-toolsai.jupyter",
+        "ms-python.python"
+      ]
+    }
   },
-  "extensions": [
-    "ms-python.python",
-    "ms-toolsai.jupyter",
-    "ms-vscode.cpptools",
-    "visualstudioexptteam.vscodeintellicode"
-  ],
-  "postCreateCommand": "pip install -r /tmp/requirements.txt"
+  "features": {},
+  "remoteUser": "jovyan"
 }
