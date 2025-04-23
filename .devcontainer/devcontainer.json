@@ -15,5 +15,6 @@
     }
   },
   "features": {},
-  "remoteUser": "jovyan"
+  "remoteUser": "jovyan",
+  "onCreateCommand": "echo 'Codespace ready. Öffne http://localhost:8888'"
 }
