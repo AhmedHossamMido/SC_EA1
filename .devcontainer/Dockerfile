@@ -13,17 +13,26 @@ ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
 
 USER $NB_USER
 
+# We need to set conda as the environment shell
 SHELL ["conda", "run", "--no-capture-output", "-n", "base", "/bin/bash", "-c"]
 
+# Install uv and packages
 RUN pip install uv==0.6.6
 
+# Copy the requirements file and install the dependencies
 COPY requirements.txt /tmp/requirements.txt
 RUN mkdir -p $HOME/.cache
 RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
     uv pip install -r /tmp/requirements.txt && \
     py pyflyby.install_in_ipython_config_file
 
+# Install ipykernel (important to link with Jupyter)
+RUN conda install -c conda-forge ipykernel
+
+# Create a new kernel named 'scipro' based on the environment
+RUN python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
+
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
 
-# Standardverzeichnis in Codespace und Jupyter
+# Default working directory in Codespace and Jupyter
 WORKDIR /workspaces/SC_EA1_bis_EA3
