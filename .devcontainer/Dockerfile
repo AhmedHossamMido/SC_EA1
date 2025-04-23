@@ -3,11 +3,13 @@
 FROM quay.io/jupyter/base-notebook:lab-4.3.6 AS base_image
 
 USER root
+
+# Install debuginfod and git
 RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
-    apt-get update && apt-get install -yq --no-install-recommends \
-      debuginfod \
-      git && \    # Git hinzufügen
+    apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    debuginfod git && \
     apt-get clean
 
 ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
@@ -31,7 +33,7 @@ RUN --mount=type=cache,uid=$NB_UID,mode=7777,target=$HOME/.cache/uv \
 RUN conda install -c conda-forge ipykernel
 
 # Create a new kernel named 'scipro' based on the environment
-RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro (Python 3.10 - Conda)"
+RUN conda run -n base python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
 
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
 
