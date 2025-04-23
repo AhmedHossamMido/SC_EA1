@@ -21,7 +21,10 @@ ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
 # Wechsel zu Nutzer jovyan
 USER $NB_USER
 
-# Aktiviere conda als die Shell-Umgebung
+# Setze den Arbeitsordner
+WORKDIR /workspaces/SC_EA1_bis_EA3
+
+# Aktiviere die Conda-Umgebung
 SHELL ["conda", "run", "--no-capture-output", "-n", "python38", "/bin/bash", "-c"]
 
 # Installiere pip und pyflyby (sowie alle Abhängigkeiten aus requirements.txt)
@@ -36,9 +39,6 @@ RUN conda install -c conda-forge ipykernel
 
 # Installiere den 'scipro' Kernel in Jupyter
 RUN conda run -n python38 python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter (Docker)"
-
-# Setze den Arbeitsordner
-WORKDIR /workspaces/SC_EA1_bis_EA3
 
 # Setze JupyterHub Dienstpräfix
 ENV JUPYTERHUB_SERVICE_PREFIX="/"
