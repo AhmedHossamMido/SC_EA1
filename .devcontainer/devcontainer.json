@@ -1,10 +1,19 @@
 {
-  "name": "SciPro Docker Container",
-  "dockerFile": "Dockerfile",
-  "workspaceFolder": "/workspaces/SC_EA1_bis_EA3",
-  "extensions": [
-    "ms-python.python",
-    "ms-toolsai.jupyter"
-  ],
-  "postCreateCommand": "pip install --upgrade pip"
+    "name": "SciPro Jupyter Environment",
+    "image": "quay.io/jupyter/base-notebook:lab-4.3.6",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "settings": {
+        "python.pythonPath": "/opt/conda/envs/python38/bin/python"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+    ],
+    "postCreateCommand": "python -m ipykernel install --user --name scipro --display-name 'SciPro Jupyter (Docker)'",
+    "mounts": [
+        "source=/workspaces,target=/workspaces,type=bind,consistency=cached"
+    ],
+    "remoteUser": "jovyan"
 }
