@@ -1,5 +1,5 @@
 # Basierend auf dem offiziellen Jupyter-Image
-FROM jupyter/base-notebook:lab-4.3.6
+FROM jupyter/base-notebook:latest
 
 # Setze den Benutzer auf jovyan (wird standardmäßig vom jupyter/base-notebook-Image verwendet)
 USER root
