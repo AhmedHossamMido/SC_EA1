@@ -1,8 +1,10 @@
 {
   "name": "SciPro JupyterLab",
   "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerfile": "Dockerfile",
+  "context": ".."
+}
+,
   "forwardPorts": [8888],
   "postCreateCommand": "echo 'Container fertig eingerichtet.'",
   "customizations": {
