@@ -1,8 +1,7 @@
 {
   "name": "SciPro JupyterLab",
   "build": {
-  "dockerfile": "Dockerfile",
-  "context": ".."
+  "dockerfile": "Dockerfile"
 }
 ,
   "forwardPorts": [8888],
