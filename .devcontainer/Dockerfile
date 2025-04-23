@@ -1,20 +1,9 @@
 # syntax=docker/dockerfile:1
 FROM quay.io/jupyter/base-notebook:lab-4.3.6 AS base_image
 
-# Installiere benötigte Pakete
+# Installiere curl und andere benötigte Pakete
 USER root
-RUN rm -f /etc/apt/apt.conf.d/docker-clean && \
-    echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
-    apt-get update && \
-    apt-get install -yq --no-install-recommends \
-    debuginfod git build-essential libomp-dev && \
-    apt-get clean
-
-# Setze Umgebungsvariablen
-ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
-
-# Wechsel zu Nutzer jovyan
-USER $NB_USER
+RUN apt-get update && apt-get install -y curl git build-essential && apt-get clean
 
 # Installiere Miniconda und eine neue Umgebung mit Python 3.8
 RUN curl -sSLo miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
@@ -23,9 +12,17 @@ RUN curl -sSLo miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-lates
     /opt/conda/bin/conda create -n python38 python=3.8 && \
     /opt/conda/bin/conda clean -a -y
 
-# Setze Conda-Binärpfad und die Umgebung
-ENV PATH=/opt/conda/bin:$PATH
-ENV CONDA_DEFAULT_ENV=python38
+# Setze Miniconda in PATH
+ENV PATH="/opt/conda/bin:$PATH"
+
+# Setze Umgebungsvariablen
+ENV DEBUGINFOD_URLS="https://debuginfod.ubuntu.com/"
+
+# Wechsel zu Nutzer jovyan
+USER $NB_USER
+
+# Aktiviere conda als die Shell-Umgebung
+SHELL ["conda", "run", "--no-capture-output", "-n", "python38", "/bin/bash", "-c"]
 
 # Installiere uv als schnelle Alternative zu pip
 RUN pip install uv==0.6.6
