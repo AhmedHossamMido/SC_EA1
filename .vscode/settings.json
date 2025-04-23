@@ -1,4 +1,7 @@
 {
   "python.defaultInterpreterPath": "/opt/conda/bin/python",
-  "jupyter.kernel.default": "SciPro Jupyter (Docker)"
+  "jupyter.jupyterServerType": "local",
+  "jupyter.defaultKernel": "Python 3 (ipykernel)",
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "jupyter.disableJupyterAutoStart": false
 }
