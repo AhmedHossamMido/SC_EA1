@@ -29,4 +29,6 @@ ENV JUPYTERHUB_SERVICE_PREFIX="/"
 WORKDIR /workspaces/SC_EA1_bis_EA3
 
 # Starte JupyterLab automatisch beim Start
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]
+
+RUN python -m ipykernel install --user --name scipro --display-name "SciPro Jupyter"
