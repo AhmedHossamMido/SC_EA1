@@ -28,7 +28,7 @@ import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Hier fügen wir die Zeile ein, um die Warnung zu unterdrücken
-RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" > /home/$NB_USER/.ipython/profile_default/startup/01-ignore-pyflyby-warnings.py
+RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" >> /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Installiert die Python-Pakete aus der requirements.txt-Datei
 RUN pip install -r /tmp/requirements.txt
