@@ -6,9 +6,12 @@ FROM jupyter/base-notebook:latest
 # Installiere zusätzliche Pakete, die für den Container benötigt werden
 # Wir wechseln hier zu 'root', um Systempakete zu installieren. Danach wechseln wir zurück zum Standardbenutzer 'nbuser'.
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git && \  # Git wird installiert, damit du Git-Repositories innerhalb des Containers verwenden kannst
-    rm -rf /var/lib/apt/lists/*  # Entfernt die Paketlisten, um den Container kleiner zu machen (sauberer Build)
+
+# Installiere Git
+RUN apt-get update && apt-get install -y --no-install-recommends git
+
+# Bereinige Paketlisten (für schlankeres Image)
+RUN rm -rf /var/lib/apt/lists/*
 
 # Wechsel zurück zum Standardbenutzer von Jupyter, der "nbuser" heißt
 # Dies verhindert, dass während des Betriebs des Containers Sicherheitsprobleme auftreten, da root-Rechte nicht mehr benötigt werden.
