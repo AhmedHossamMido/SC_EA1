@@ -20,23 +20,6 @@ USER $NB_USER
 # Kopiere die requirements.txt in den Container, damit wir die benötigten Python-Abhängigkeiten installieren können
 COPY .devcontainer/requirements.txt /tmp/requirements.txt
 
-# Erstelle einen Ordner für die IPython Startup-Skripte
-# Jupyter-Notebooks führen automatisch alle Python-Importe aus, die in den Startup-Dateien enthalten sind.
-# RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
-#    printf "import marimo\n\
-# import pyflyby\n\
-# import altair as alt\n\
-# import hvplot\n\
-# import matplotlib.pyplot as plt\n\
-# import numba\n\
-# import numpy as np\n\
-# import pandas as pd\n\
-# import plotly.express as px\n\
-# import polars as pl\n\
-# import pyarrow\n\
-# import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
-# Dies sorgt dafür, dass beim Starten von Jupyter-Notebooks alle genannten Bibliotheken automatisch importiert werden
-
 # Installiere die Python-Abhängigkeiten aus der requirements.txt
 # Hier werden alle Python-Pakete installiert, die du für dein Projekt benötigst.
 # Installiere pyflyby, um die gewünschte Funktionalität sicherzustellen
