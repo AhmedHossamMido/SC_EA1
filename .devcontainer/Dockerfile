@@ -30,9 +30,6 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
 # Diese Zeile sorgt dafür, dass pyflyby korrekt in die IPython-Konfiguration integriert wird, 
 # was notwendig ist, um die Importfunktion von pyflyby zu ermöglichen.
 
-# Diese Zeile sorgt dafür, dass beim Starten von Jupyter Notebooks im Container keine Warnungen von pyflyby angezeigt werden
-# RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" > /home/$NB_USER/.ipython/profile_default/startup/01-ignore-pyflyby-warnings.py
-
 # Standard-Startbefehl: Starte JupyterLab auf allen Schnittstellen (IP 0.0.0.0) und Port 8888
 # --ip=0.0.0.0 stellt sicher, dass Jupyter von allen IPs im Container erreichbar ist.
 # --port=8888 legt den Port fest, auf dem der Jupyter-Dienst läuft.
