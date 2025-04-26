@@ -1,65 +1,34 @@
-# Beginne mit dem offiziellen Jupyter Base-Notebook Image.
-# Dieses Image enthält die grundlegenden Jupyter-Komponenten, die wir benötigen.
+# Benutze das offizielle Jupyter-Base-Image als Ausgangspunkt
 FROM jupyter/base-notebook:latest
 
-# Wechsel zum Root-Benutzer, um Systempakete zu installieren
+# Installiere zusätzliche Pakete als root (erforderlich für Systempakete)
 USER root
-
-# Führe das Update der Paketliste aus und installiere git, das wir für einige Operationen benötigen.
-# "apt-get update" holt die neuesten Paketinformationen und "apt-get install" installiert git.
-# Das "--no-install-recommends" stellt sicher, dass nur die grundlegendsten Pakete installiert werden,
-# ohne unnötige zusätzliche Software.
-# Am Ende löschen wir die Paketcache-Dateien, um den Container kleiner zu machen.
+# Dieser Befehl installiert das Paket 'git' und führt eine Bereinigung der Paketlisten durch, um das Docker-Image kleiner zu machen
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/*  # Entfernt die temporären Paketlisten, um das Image kleiner zu halten
 
-# Jetzt wechseln wir zurück zum normalen Benutzer (NB_USER),
-# um sicherzustellen, dass alle weiteren Installationen im Kontext des Benutzers durchgeführt werden
-# und nicht als Root, was eine bessere Sicherheitspraxis ist.
+# Wechsel zurück zum Standard-Jupyter-Benutzer
 USER $NB_USER
+# $NB_USER ist die Umgebungsvariable, die auf den standardmäßigen Benutzer von Jupyter (in der Regel 'jovyan') verweist.
 
-# Kopiere die requirements.txt Datei von deinem lokalen Verzeichnis in das Container-Dateisystem
-# Diese Datei enthält eine Liste von Python-Paketen, die später installiert werden.
+# Kopiere die 'requirements.txt' Datei vom lokalen Projektordner in das Container-Dateisystem
 COPY .devcontainer/requirements.txt /tmp/requirements.txt
+# Hier wird die Datei 'requirements.txt', die alle erforderlichen Python-Pakete listet, ins temporäre Verzeichnis '/tmp' im Container kopiert.
+# Dieser Schritt ist notwendig, um die Pakete aus dieser Datei im nächsten Schritt zu installieren.
 
-# Erstelle ein Verzeichnis für die IPython-Startup-Skripte.
-# IPython-Startups sind Skripte, die automatisch ausgeführt werden, wenn ein Jupyter Notebook oder IPython
-# gestartet wird. Diese werden oft verwendet, um nützliche Importe oder Funktionen vorab zu definieren.
-RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
-    printf "import marimo\n\
-import pyflyby\n\
-import altair as alt\n\
-import hvplot\n\
-import matplotlib.pyplot as plt\n\
-import numba\n\
-import numpy as np\n\
-import pandas as pd\n\
-import plotly.express as px\n\
-import polars as pl\n\
-import pyarrow\n\
-import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
-
-# Füge eine Zeile hinzu, die beim Starten von IPython Jupyter Lab Warnungen von pyflyby unterdrückt.
-# Diese Zeile sorgt dafür, dass IPython beim Starten keine unnötigen Warnungen anzeigt, die dich darauf
-# hinweisen, pyflyby zu installieren. Dies macht das Notebook-Environment sauberer und angenehmer zu nutzen.
-RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" >> /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
-
-# Installiere alle Python-Pakete aus der requirements.txt-Datei, die wir im Container gespeichert haben.
-# Die "pip install -r /tmp/requirements.txt"-Anweisung stellt sicher, dass alle Pakete, die für das Projekt
-# notwendig sind, installiert werden. Dazu gehören u.a. Bibliotheken wie Pandas, NumPy, Matplotlib und andere.
+# Installiere die Python-Pakete aus der requirements.txt
 RUN pip install -r /tmp/requirements.txt
+# Der Befehl 'pip install -r /tmp/requirements.txt' installiert alle Python-Pakete, die in der 'requirements.txt' aufgelistet sind.
+# Die 'requirements.txt' enthält normalerweise Bibliotheken, die für dein Projekt erforderlich sind, wie z.B. 'pandas', 'numpy', etc.
 
-# Installiere pyflyby und führe die Konfiguration für IPython aus.
-# Hier installieren wir pyflyby explizit und führen dann den Befehl aus, um pyflyby in der IPython-Konfiguration
-# zu registrieren. Dies stellt sicher, dass pyflyby korrekt konfiguriert ist, damit es in jedem Jupyter-Notebook
-# verfügbar ist und funktioniert, ohne dass zusätzliche Schritte erforderlich sind.
-RUN pip install pyflyby && \
-    python -c "import pyflyby; pyflyby.install_in_ipython_config_file()"
-
-# Der Standardbefehl für den Container, wenn er gestartet wird.
-# Hier starten wir Jupyter Lab und geben an, dass es auf allen Netzwerkadressen verfügbar sein soll
-# ("--ip=0.0.0.0") und auf Port 8888 läuft. 
-# Wir deaktivieren den Browserstart und entfernen den Token, um eine einfache Verbindung ohne Authentifizierung zu ermöglichen.
-# Das Verzeichnis, das geöffnet wird, wird auf /workspaces/SC_EA1_bis_EA3 gesetzt.
+# Der Standard-Startbefehl für den Container
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
+# Dieser Befehl startet den JupyterLab-Server, wenn der Container ausgeführt wird.
+# Erklärung der Optionen:
+# --ip=0.0.0.0: Jupyter wird auf allen IP-Adressen des Containers lauschen, sodass es von außen zugänglich ist.
+# --port=8888: Der JupyterLab-Server wird auf Port 8888 laufen.
+# --no-browser: Verhindert, dass Jupyter automatisch einen Browser öffnet.
+# --NotebookApp.token='': Dies deaktiviert die Token-Authentifizierung für den Zugriff auf das JupyterLab. (Sicherstellen, dass nur autorisierte Benutzer auf den Container zugreifen.)
+# --NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3: Legt das Verzeichnis fest, das als Arbeitsverzeichnis für JupyterLab verwendet wird. Alle Notebooks und Dateien in diesem Ordner werden angezeigt.
+
