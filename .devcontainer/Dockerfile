@@ -27,5 +27,7 @@ import polars as pl\n\
 import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
+RUN pip install -r /tmp/requirements.txt
+
 # Standard-Startbefehl: Starte Jupyter Notebook und öffne das Verzeichnis
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
