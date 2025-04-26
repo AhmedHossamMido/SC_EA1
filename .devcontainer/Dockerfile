@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 USER $NB_USER
 
 # Kopiere requirements.txt hinein!
-COPY requirements.txt /tmp/requirements.txt
+COPY .devcontainer/requirements.txt /tmp/requirements.txt
 
 # IPython Startup Imports automatisch erstellen (schön formatiert)
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
