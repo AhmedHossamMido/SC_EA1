@@ -28,5 +28,4 @@ import polars as pl\n\
 import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
-# Standard-Startbefehl
-CMD ["start-notebook.sh"]
+# Kein CMD hier, da dies in devcontainer.json gemacht wird
