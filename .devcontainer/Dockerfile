@@ -9,10 +9,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Wechsel zurück zum normalen User
 USER $NB_USER
 
-# Installiere Python-Abhängigkeiten (gibt's schon im PostCreateCommand)
-# COPY requirements.txt /tmp/requirements.txt
-# RUN pip install --no-cache-dir -r /tmp/requirements.txt
-
 # IPython Startup Imports automatisch erstellen (schön formatiert)
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
     printf "import marimo\n\
@@ -28,6 +24,5 @@ import polars as pl\n\
 import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
-"]
-
+# Standard-Startbefehl: Starte Jupyter Notebook und öffne das Verzeichnis
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
