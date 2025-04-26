@@ -6,8 +6,7 @@
     "terminal.integrated.shell.linux": "/bin/bash"
   },
   "features": {
-    "ghcr.io/devcontainers/features/python:1": {},
-    "ghcr.io/devcontainers/features/jupyter-server:1": {}
+    "ghcr.io/devcontainers/features/python:1": {}
   },
   "extensions": [
     "ms-python.python",
