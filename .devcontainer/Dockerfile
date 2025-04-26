@@ -29,5 +29,4 @@ import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Standard-Startbefehl
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
-
+CMD ["start-notebook.sh"]
