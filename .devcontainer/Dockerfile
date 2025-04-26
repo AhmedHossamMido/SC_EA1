@@ -16,8 +16,8 @@ COPY .devcontainer/requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
 # Installiere pyflyby und führe die Konfiguration für IPython aus
-RUN pip install pyflyby && \
-    pyflyby.install_in_ipython_config_file
+# Diese Zeile stellt sicher, dass pyflyby korrekt in der IPython-Konfigurationsdatei installiert wird.
+RUN pyflyby.install_in_ipython_config_file
 
 # IPython Startup Imports automatisch erstellen
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
