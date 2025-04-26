@@ -43,8 +43,9 @@ RUN pip install -r /tmp/requirements.txt
 
 # Installiere pyflyby, um die gewünschte Funktionalität sicherzustellen
 # Dies wird benötigt, um die pyflyby-Erweiterung für Jupyter zu installieren und zu konfigurieren.
-RUN pip install pyflyby && \
-    pyflyby.install_in_ipython_config_file
+# Konfiguriere IPython automatisch
+# RUN python3 -c "import pyflyby; pyflyby.install_in_ipython_config_file()"
+
 # Diese Zeile sorgt dafür, dass pyflyby korrekt in die IPython-Konfiguration integriert wird, 
 # was notwendig ist, um die automatische Importfunktion von pyflyby zu ermöglichen.
 
