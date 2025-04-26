@@ -32,6 +32,43 @@ Inhalt des Containers
   - Python 3 (Conda Umgebung)
 - Entwicklungsumgebung: GitHub Codespaces
 
+Automatische Imports beim Start
+===============================
+
+Beim Start von JupyterLab oder einer IPython-Sitzung werden automatisch wichtige Pakete importiert,
+damit typische Datenanalyse- und Visualisierungsaufgaben sofort beginnen können, ohne manuelles Importieren.
+
+Folgende Pakete werden automatisch importiert:
+
+- ``numpy`` als ``np``
+- ``pandas`` als ``pd``
+- ``matplotlib.pyplot`` als ``plt``
+- ``altair`` als ``alt``
+- ``hvplot``
+- ``plotly.express`` als ``px``
+- ``polars`` als ``pl``
+- ``scipy``
+- ``pyarrow``
+- ``marimo``
+- ``pyflyby``
+- ``numba``
+
+Nicht automatisch importiert werden spezielle Jupyter-Plugins oder Profiler-Tools wie:
+
+- ``jupyter-marimo-proxy``
+- ``jupyterlab-pyflyby``
+- ``memray``
+- ``scalene``
+- ``viztracer``
+
+Diese Pakete werden zwar installiert, aber sie sind entweder nur über Jupyter-Erweiterungen verfügbar
+oder erfordern eine spezielle Initialisierung und werden daher nicht automatisch importiert.
+
+**Hinweis:**  
+Die automatische Importliste wird über ein IPython-Startup-Skript eingerichtet (``~/.ipython/profile_default/startup/00-imports.py``).
+
+Das ermöglicht ein schnelles Arbeiten direkt nach dem Öffnen des Codespace ohne zusätzliche Vorbereitung.
+
 Features
 --------
 
