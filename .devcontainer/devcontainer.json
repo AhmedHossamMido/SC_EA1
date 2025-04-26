@@ -1,6 +1,6 @@
 {
   "name": "scipro-container",
-  "dockerFile": ".devcontainer/Dockerfile",
+  "dockerFile": "Dockerfile",
   "context": "..",
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
