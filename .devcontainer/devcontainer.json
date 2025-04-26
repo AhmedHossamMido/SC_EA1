@@ -17,5 +17,4 @@
   },
   "forwardPorts": [8888],
   "overrideCommand": false,
-  "postCreateCommand": "pip install -r /tmp/requirements.txt"
 }
