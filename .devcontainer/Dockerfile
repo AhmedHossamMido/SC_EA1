@@ -22,35 +22,33 @@ COPY .devcontainer/requirements.txt /tmp/requirements.txt
 
 # Erstelle einen Ordner für die IPython Startup-Skripte
 # Jupyter-Notebooks führen automatisch alle Python-Importe aus, die in den Startup-Dateien enthalten sind.
-RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
-    printf "import marimo\n\
-import pyflyby\n\
-import altair as alt\n\
-import hvplot\n\
-import matplotlib.pyplot as plt\n\
-import numba\n\
-import numpy as np\n\
-import pandas as pd\n\
-import plotly.express as px\n\
-import polars as pl\n\
-import pyarrow\n\
-import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
+# RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
+#    printf "import marimo\n\
+# import pyflyby\n\
+# import altair as alt\n\
+# import hvplot\n\
+# import matplotlib.pyplot as plt\n\
+# import numba\n\
+# import numpy as np\n\
+# import pandas as pd\n\
+# import plotly.express as px\n\
+# import polars as pl\n\
+# import pyarrow\n\
+# import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 # Dies sorgt dafür, dass beim Starten von Jupyter-Notebooks alle genannten Bibliotheken automatisch importiert werden
 
 # Installiere die Python-Abhängigkeiten aus der requirements.txt
 # Hier werden alle Python-Pakete installiert, die du für dein Projekt benötigst.
-RUN pip install -r /tmp/requirements.txt
-
 # Installiere pyflyby, um die gewünschte Funktionalität sicherzustellen
 # Dies wird benötigt, um die pyflyby-Erweiterung für Jupyter zu installieren und zu konfigurieren.
 # Konfiguriere IPython automatisch
-# RUN python3 -c "import pyflyby; pyflyby.install_in_ipython_config_file()"
-
+RUN pip install --no-cache-dir -r /tmp/requirements.txt && \
+    python3 -c "import pyflyby; pyflyby.install_in_ipython_config_file()"
 # Diese Zeile sorgt dafür, dass pyflyby korrekt in die IPython-Konfiguration integriert wird, 
-# was notwendig ist, um die automatische Importfunktion von pyflyby zu ermöglichen.
+# was notwendig ist, um die Importfunktion von pyflyby zu ermöglichen.
 
 # Diese Zeile sorgt dafür, dass beim Starten von Jupyter Notebooks im Container keine Warnungen von pyflyby angezeigt werden
-RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" > /home/$NB_USER/.ipython/profile_default/startup/01-ignore-pyflyby-warnings.py
+# RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" > /home/$NB_USER/.ipython/profile_default/startup/01-ignore-pyflyby-warnings.py
 
 # Standard-Startbefehl: Starte JupyterLab auf allen Schnittstellen (IP 0.0.0.0) und Port 8888
 # --ip=0.0.0.0 stellt sicher, dass Jupyter von allen IPs im Container erreichbar ist.
