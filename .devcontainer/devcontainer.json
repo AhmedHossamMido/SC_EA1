@@ -1,20 +1,43 @@
 {
-  "name": "scipro-container",
-  "dockerFile": "Dockerfile",
-  "context": "..",
+  "name": "scipro-container",  // Der Name des Containers, der in der Visual Studio Code (VS Code) Entwicklungsumgebung angezeigt wird. 
+                               // Dies hilft, den Container von anderen zu unterscheiden und macht es leichter, den richtigen Container zu identifizieren.
+  
+  "dockerFile": "Dockerfile",  // Der Pfad zum Dockerfile, das die Konfiguration für den Container enthält.
+                               // Es wird verwendet, um das Docker-Image zu erstellen, das dann für den Container genutzt wird.
+                               // In diesem Fall wird das Dockerfile im aktuellen Verzeichnis angenommen.
+  
+  "context": "..",  // Das Verzeichnis, das als Build-Kontext für den Docker-Build-Prozess verwendet wird. 
+                    // Das bedeutet, dass alle Dateien und Ordner innerhalb des übergeordneten Verzeichnisses (..) im Build-Prozess berücksichtigt werden. 
+                    // Docker verwendet dieses Verzeichnis, um alle notwendigen Dateien für den Build zu sammeln.
+  
   "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
+    "terminal.integrated.shell.linux": "/bin/bash"  // Legt das Standard-Shell für das integrierte Terminal in VS Code fest. 
+                                                   // In diesem Fall wird die Bash-Shell verwendet, da diese auf Unix-ähnlichen Systemen weit verbreitet ist. 
+                                                   // Dies sorgt für eine konsistente und komfortable Benutzererfahrung im Terminal.
   },
+
   "extensions": [
-    "ms-python.python",
-    "ms-toolsai.jupyter"
+    "ms-python.python",  // Diese Erweiterung für VS Code ermöglicht Python-spezifische Funktionen wie IntelliSense (Automatische Vervollständigung), Linting (Fehlererkennung) und Debugging.
+                         // Sie ist wichtig, um mit Python effizient in VS Code zu arbeiten und wird für das Arbeiten mit Python-Projekten benötigt.
+    "ms-toolsai.jupyter"  // Diese Erweiterung ermöglicht die Arbeit mit Jupyter-Notebooks direkt innerhalb von VS Code. 
+                          // Sie bietet eine interaktive Entwicklungsumgebung für Data Science und Notebooks. 
+                          // Damit kannst du Zellen ausführen, Notebooks visualisieren und interaktive Datenanalysen durchführen.
   ],
+
   "portsAttributes": {
     "8888": {
-      "label": "Jupyter",
-      "onAutoForward": "openBrowser"
+      "label": "Jupyter",  // Der Name, der dem Port 8888 zugewiesen wird. Port 8888 ist der Standardport für JupyterLab, der Web-UI für Jupyter Notebooks.
+      "onAutoForward": "openBrowser"  // Wenn der Port 8888 automatisch weitergeleitet wird (z. B. bei einem Containerstart), 
+                                     // sorgt diese Einstellung dafür, dass ein Browserfenster geöffnet wird, das die Jupyter-Oberfläche anzeigt.
+                                     // Dies erleichtert den Zugang zu JupyterLab direkt nach dem Containerstart.
     }
   },
-  "forwardPorts": [8888],
-  "overrideCommand": false
+
+  "forwardPorts": [8888],  // Hier wird der Port 8888 für die Weiterleitung angegeben. 
+                           // Das bedeutet, dass der JupyterLab-Server, der im Container läuft, über diesen Port zugänglich ist. 
+                           // Der Port 8888 ist der Standardport für Jupyter Notebooks und ermöglicht den Zugriff auf die Weboberfläche von JupyterLab im Browser.
+  
+  "overrideCommand": false  // Wenn dieser Wert auf "false" gesetzt ist, wird der Standardbefehl aus dem Dockerfile verwendet, um den Container zu starten.
+                            // In diesem Fall bedeutet dies, dass der Befehl zum Starten von JupyterLab (aus dem Dockerfile) verwendet wird, ohne dass ein alternativer Befehl in der Konfiguration überschrieben wird.
+                            // Der Standardbefehl sorgt dafür, dass JupyterLab mit den in der Dockerfile-Konfiguration angegebenen Parametern gestartet wird.
 }
