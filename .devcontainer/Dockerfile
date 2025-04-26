@@ -25,4 +25,4 @@ import pyarrow\n\
 import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Standard-Startbefehl: Starte Jupyter Notebook und öffne das Verzeichnis
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
