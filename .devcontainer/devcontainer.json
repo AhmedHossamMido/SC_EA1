@@ -16,5 +16,5 @@
     }
   },
   "forwardPorts": [8888],
-  "overrideCommand": false,
+  "overrideCommand": false
 }
