@@ -12,6 +12,13 @@ USER $NB_USER
 # Kopiere requirements.txt hinein!
 COPY .devcontainer/requirements.txt /tmp/requirements.txt
 
+# Installiere die Python-Pakete aus der requirements.txt-Datei
+RUN pip install -r /tmp/requirements.txt
+
+# Installiere pyflyby und führe die Konfiguration für IPython aus
+RUN pip install pyflyby && \
+    pyflyby.install_in_ipython_config_file
+
 # IPython Startup Imports automatisch erstellen
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
     printf "import marimo\n\
@@ -29,9 +36,6 @@ import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Hier fügen wir die Zeile ein, um die Warnung zu unterdrücken
 RUN echo "import warnings\nwarnings.filterwarnings('ignore', category=UserWarning, module='pyflyby')" >> /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
-
-# Installiert die Python-Pakete aus der requirements.txt-Datei
-RUN pip install -r /tmp/requirements.txt
 
 # Standard-Startbefehl: Starte Jupyter Notebook und öffne das Verzeichnis
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.notebook_dir=/workspaces/SC_EA1_bis_EA3"]
