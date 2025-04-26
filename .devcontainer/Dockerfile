@@ -13,9 +13,20 @@ USER $NB_USER
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# IPython Startup Imports automatisch erstellen
+# IPython Startup Imports automatisch erstellen (schön formatiert)
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
-    echo "import marimo\nimport pyflyby\nimport altair as alt\nimport hvplot\nimport matplotlib.pyplot as plt\nimport numba\nimport numpy as np\nimport pandas as pd\nimport plotly.express as px\nimport polars as pl\nimport pyarrow\nimport scipy" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
+    printf "import marimo\n\
+import pyflyby\n\
+import altair as alt\n\
+import hvplot\n\
+import matplotlib.pyplot as plt\n\
+import numba\n\
+import numpy as np\n\
+import pandas as pd\n\
+import plotly.express as px\n\
+import polars as pl\n\
+import pyarrow\n\
+import scipy\n" > /home/$NB_USER/.ipython/profile_default/startup/00-startup.py
 
 # Standard-Startbefehl
 CMD ["start-notebook.sh"]
