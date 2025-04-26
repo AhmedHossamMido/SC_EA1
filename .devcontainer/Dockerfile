@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Wechsel zurück zum normalen User
 USER $NB_USER
 
+# Kopiere requirements.txt hinein!
+COPY requirements.txt /tmp/requirements.txt
+
 # IPython Startup Imports automatisch erstellen (schön formatiert)
 RUN mkdir -p /home/$NB_USER/.ipython/profile_default/startup && \
     printf "import marimo\n\
