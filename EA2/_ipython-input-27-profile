@@ -1,0 +1,167 @@
+
+
+# Flag zur Aktivierung der Visualisierung (Trennung der Simulation und Visualisierung)
+visualize = True
+
+# ------------------------------
+# SIMULATIONSFUNKTIONEN
+# ------------------------------
+
+def timestep_balls(c, v, dt, g, xmax, ymax):
+    """
+    Berechnet einen Zeitschritt für alle Bälle unter Einfluss von Gravitation,
+    inklusive Kollisionserkennung mit Wänden und Energieverlust.
+
+    Parameter:
+    - c: aktuelle Positionen (NumPy-Array der Form [n, 2])
+    - v: aktuelle Geschwindigkeiten (NumPy-Array der Form [n, 2])
+    - dt: Zeitintervall
+    - g: Gravitationsvektor
+    - xmax, ymax: Begrenzung des Simulationsraums
+
+    Rückgabewerte:
+    - Neue Positionen und Geschwindigkeiten nach einem Zeitschritt
+    """
+    # Bewegungsgleichung unter Berücksichtigung der Gravitation
+    v = v + dt * g
+    c_new = c + dt * v
+    
+
+    # Kollision mit linken/rechten Wänden
+    left_wall = c_new[:, 0] <= 0 # NumPy Verktorisierung der Vergleichoperation <=
+    right_wall = c_new[:, 0] >= xmax # NumPy Verktorisierung der Vergleichoperation >=
+    if np.any(left_wall | right_wall):
+        dt2_left_wall = abs(c_new[left_wall, 0]) / abs(v[left_wall, 0]) # NumPy Vektorisierung für /-Operation
+        dt2_right_wall = (abs(c_new[right_wall,0]) - xmax) / abs(v[right_wall, 0]) # NumPy Vektorisierung für /-Operation
+        v[left_wall | right_wall, 0] *= -1 # NumPy Vektorisierung für ODER-Operation von booleschen Arrays
+        c_new[left_wall, 0] = dt2_left_wall * v[left_wall, 0] # NumPy Vektorisierung der Operation mit Matrizen
+        c_new[right_wall, 0] = xmax - dt2_right_wall * v[right_wall, 0] # NumPy Vektorisierung der Operationen mit Matrizen
+
+    # Kollision mit oberer/unterer Wandd
+    bottom = c_new[:, 1] <= 0
+    top = c_new[:, 1] >= ymax
+    if np.any(bottom | top):
+        dt2_bottom = abs(c_new[bottom, 1]) / abs(v[bottom, 1])
+        dt2_top = (abs(c_new[top, 1]) - ymax) / abs(v[top, 1])
+        v[bottom | top, 1] *= -1
+        c_new[bottom, 1] = dt2_bottom * v[bottom, 1]
+        c_new[top, 1] = ymax - dt2_top * v[top, 1]
+
+    return c_new, v
+
+def simulate_multiple_balls_with_vis(positions, velocities, steps, dt, g, xmax, ymax):
+    """
+    Führt die Mehrball-Simulation durch und berechnet Bewegungen über mehrere Schritte.
+
+    Die Positionen werden für eine spätere Animation gespeichert (visualize = True).
+
+    Parameter:
+    - num_balls: Anzahl der Bälle
+    - positions: Anfangspositionen der Bälle
+    - velocities: Anfangsgeschwindigkeiten der Bälle
+    - steps: Anzahl der Simulationsschritte
+    - dt: Zeitintervall
+    - g: Gravitationsvektor
+    - xmax, ymax: Begrenzungen des Raumes
+
+    Rückgabewerte:
+    - Liste aller Positionen (falls vis=True)
+    """
+    # Speicherung der Positionen für Visualisierung
+    all_positions = [positions.copy()]
+
+    #  Schrittweise Simulation
+    for i in range(steps):
+        # Aktualisiere Positionen und Geschwindigkeiten
+        positions, velocities = timestep_balls(positions, velocities, dt, g, xmax, ymax)
+        all_positions.append(positions.copy())
+
+    return all_positions
+
+        
+def simulate_multiple_balls_without_vis(positions, velocities, steps, dt, g, xmax, ymax):
+    """
+    Führt die Mehrball-Simulation durch und berechnet Bewegungen über mehrere Schritte.
+
+    Die Positionen werden NICHT für eine spätere Animation gespeichert (visualize = False).
+
+    Parameter:
+    - num_balls: Anzahl der Bälle
+    - positions: Anfangspositionen der Bälle
+    - velocities: Anfangsgeschwindigkeiten der Bälle
+    - steps: Anzahl der Simulationsschritte
+    - dt: Zeitintervall
+    - g: Gravitationsvektor
+    - xmax, ymax: Begrenzungen des Raumes
+
+    Rückgabewerte:
+    - Nur Statusmeldung
+    """
+
+    #  Schrittweise Simulation
+    for i in range(steps):
+        # Aktualisiere Positionen und Geschwindigkeiten
+        positions, velocities = timestep_balls(positions, velocities, dt, g, xmax, ymax)
+
+    return
+
+# ------------------------------
+# VISUALISIERUNG
+# ------------------------------
+
+def animate_positions(all_positions, num_balls, xmax, ymax, filename="multi_ball_colored.gif"):
+    """
+    Erstellt eine Animation der gespeicherten Positionen und speichert sie als GIF.
+
+    Parameter:
+    - all_positions: Liste der Positionen aller Bälle pro Frame
+    - num_balls: Anzahl der Bälle
+    - xmax, ymax: Grenzen des Simulationsbereichs
+    - filename: Dateiname für das exportierte GIF
+    """
+    colors = plt.cm.jet(np.linspace(0, 1, num_balls))  # Farbverlauf für Unterscheidung
+    fig, ax = plt.subplots()
+    ax.set_xlim(0, xmax)
+    ax.set_ylim(0, ymax)
+    ax.set_aspect('equal')
+    ax.set_title("Multiball-Simulation")
+
+    # Erzeuge ein Plot-Objekt pro Ball
+    balls_plots = [ax.plot([], [], 'o', color=colors[i], markersize=10)[0] for i in range(num_balls)]
+    
+    # Init-Funktion für das Plot
+    def init():
+        # Leere Startdaten
+        for ball in balls_plots:
+            ball.set_data([], [])
+        return balls_plots
+        
+    # Update-Funktion für das Plot
+    def update(frame):
+        # Update Positionen für jeden Frame
+        pos = all_positions[frame]
+        for i, ball in enumerate(balls_plots):
+            ball.set_data([pos[i, 0]], [pos[i, 1]])
+        return balls_plots
+
+    ani = FuncAnimation(fig, update, frames=len(all_positions), init_func=init, blit=True, interval=50)
+    ani.save(filename, writer=PillowWriter(fps=20))
+    print(f"GIF gespeichert als: {filename}")
+
+# ------------------------------
+# HAUPTFUNKTION
+# ------------------------------
+
+if visualize == True:
+    # Führe Simulation mit Visualisierung durch und animiere das Ergebnis
+    all_positions = simulate_multiple_balls_with_vis(
+        positions, velocities, steps, dt, g, xmax, ymax
+    )
+    # animate_positions(all_positions, num_balls, xmax, ymax)
+    print("Simulation (mit Visualisierung) war erfolgreich")
+else:
+    # Nur reine Simulation ohne Animation
+    simulate_multiple_balls_without_vis(
+        positions, velocities, steps, dt, g, xmax, ymax
+    )
+    print("Simulation (ohne Visualisierung) war erfolgreich")
