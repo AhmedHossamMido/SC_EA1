@@ -1,0 +1,57 @@
+
+
+import numpy as np
+import numba
+import time
+
+# Originale Version mit reiner Python-Iteration
+def escape_time(p, maxiter):
+    z = 0j
+    for i in range(maxiter):
+        z = z*z + p
+        if abs(z) > 2:
+            return i
+    return maxiter
+
+# NumPy-Vectorize Version (langsam, nur syntaktisch)
+def mandelbrot_set_np_vectorized(P, maxiter):
+    vec_escape = np.vectorize(escape_time)
+    return vec_escape(P, maxiter)
+
+# Numba-Vektorisierung (schnell)
+@numba.vectorize(['int32(complex128, int32)'], nopython=True)
+def escape_time_numba(p, maxiter):
+    z = 0j
+    for i in range(maxiter):
+        z = z*z + p
+        if abs(z) > 2:
+            return i
+    return maxiter
+
+def mandelbrot_set_numba_vectorized(P, maxiter):
+    return escape_time_numba(P, maxiter)
+
+# Numba mit Parallelisierung (schnell + multi-core)
+@numba.vectorize(['int32(complex128, int32)'], target='parallel')
+def escape_time_numba_par(p, maxiter):
+    z = 0j
+    for i in range(maxiter):
+        z = z*z + p
+        if abs(z) > 2:
+            return i
+    return maxiter
+
+def mandelbrot_set_numba_vectorized_par(P, maxiter):
+    return escape_time_numba_par(P, maxiter)
+
+# Gemeinsame Eingabedaten vorbereiten (reduzierte Auflösung für Profiling)
+real_param = (-1.5, 1.1, 300)
+imag_param = (-1.5j, 1.1j, 300)
+XX, YY = np.meshgrid(np.linspace(*real_param), np.linspace(*imag_param))
+P = XX + YY
+maxiter = 200
+
+# Ausführung der Funktionen zur Profilierung
+_ = mandelbrot_set_np_vectorized(P, maxiter)        # _ = ... Führe die Funktion aus, aber ich brauche das Ergebnis nicht. Der Rückgabewert belastet den Speicher nicht unnötig.
+_ = mandelbrot_set_numba_vectorized(P, maxiter)
+_ = mandelbrot_set_numba_vectorized_par(P, maxiter)
