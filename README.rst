@@ -15,7 +15,7 @@ Nutzung mit GitHub Codespaces (empfohlen)
 
 3. **JupyterLab manuell öffnen**:
    Nach dem Start erscheint ein Hinweis, dass der Port 8888 offen ist.
-   Klicken Sie oben auf **"Ports"** → **Port 8888** → **"Open in Browser"**.
+   Klicken Sie auf **"Ports"** → **Port 8888** → **"Open in Browser"**.
 
 4. **Arbeiten im Browser**:
    Die vollständige Jupyter-Umgebung ist im Browser verfügbar.
