@@ -104,7 +104,7 @@ Hinweise
 
 - Die Arbeit mit Jupyter über den Codespace ist im Hinblick auf die Dateigröße eingeschränkt. 
 - HTTP PUT/POST-Anfrage mit dem Notebook-Inhalt darf die HTTP-Größenbeschränkungen nicht überschreiten.
-- Diese Anfrage wird durch GitHub Codespaces oder durch den Jupyter-Server mit einem 413 Payload Too Large abgelehnt, wenn die Datei zu groß ist
+- Die Anfrage wird durch GitHub Codespaces oder den Jupyter-Server mit "413 Payload Too Large" abgelehnt, wenn die Datei zu groß ist
 - Für größere Dateien empfiehlt es sich, lokal zu arbeiten.
 
 Lizenz
