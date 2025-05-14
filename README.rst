@@ -102,9 +102,9 @@ Struktur
 Hinweise
 --------
 
-- Beim ersten Push wirst du ggf. nach deinem GitHub Token oder SSH-Zugang gefragt.
-- Erweiterungen wie `jupyterlab_pyflyby` und `marimo` sind bereits vorinstalliert.
-- Beachte, dass Notebook 7 Änderungen an alten Erweiterungen verursachen kann: https://jupyter-notebook.readthedocs.io/en/latest/migrate_to_notebook7.html
+- Die Arbeit mit Jupyter über den Codespace ist im Hinblick auf die Dateigröße eingeschränkt. 
+- HTTP PUT/POST-Anfrage mit dem Notebook-Inhalt darf die HTTP-Größenbeschränkungen nicht überschreiten.
+- Für größere Dateien empfiehlt es sich, lokal zu arbeiten.
 
 Lizenz
 ------
